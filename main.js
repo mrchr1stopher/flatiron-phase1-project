@@ -14,7 +14,13 @@ function getPokemon(e) {
   fetch(`https://pokeapi.co/api/v2/pokemon/${name}`)
     .then((response) => response.json())
     .then((data) => {
-      const moves = data.moves.map((move) => move.move.name).join(", ");
+      const type = data.types
+        .map((type) => capitalizeFirstLetter(type.type.name))
+        .join(" / ");
+      const moves = data.moves
+        .map((move) => capitalizeFirstLetter(move.move.name))
+        .join(", ");
+
       document.querySelector(".pokemonBox").innerHTML = `
           <div>
             <img src="${
@@ -24,8 +30,10 @@ function getPokemon(e) {
           <div class="pokemonInfo">
             <h1>${capitalizeFirstLetter(data.name)}</h1>
             <p>Number: ${data.id}</p>
-            <p>Weight: ${data.weight} lbs</p>
+            <p>Type: ${type}</p>
+            <p>Weight: ${data.weight * 0.1} kg / ${data.weight * 0.22} lbs </p>
             <p>Moves: ${moves}</p>
+
           </div>
         `;
     })
