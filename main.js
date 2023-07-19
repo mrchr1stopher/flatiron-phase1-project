@@ -21,6 +21,14 @@ function getPokemon(e) {
         .map((move) => capitalizeFirstLetter(move.move.name))
         .join(", ");
 
+      const stats = data.stats
+        .map((stat) => {
+          const statName = capitalizeFirstLetter(stat.stat.name);
+          const baseStat = stat.base_stat;
+          return `${statName}: ${baseStat}`;
+        })
+        .join("<br>");
+
       document.querySelector(".pokemonBox").innerHTML = `
           <div>
             <img src="${
@@ -29,10 +37,12 @@ function getPokemon(e) {
           </div>
           <div class="pokemonInfo">
             <h1>${capitalizeFirstLetter(data.name)}</h1>
-            <p>Number: ${data.id}</p>
+            <p>National Pokédex Number: #${data.id}</p>
             <p>Type: ${type}</p>
             <p>Weight: ${data.weight * 0.1} kg / ${data.weight * 0.22} lbs </p>
+            <p>${stats}</p>
             <p>Moves: ${moves}</p>
+
 
           </div>
         `;
