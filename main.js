@@ -1,46 +1,3 @@
-function generateRandomIds(count) {
-  const randomIds = [];
-  while (randomIds.length < count) {
-    const randomId = Math.floor(Math.random() * 1010) + 1;
-    if (!randomIds.includes(randomId)) {
-      randomIds.push(randomId);
-    }
-  }
-  return randomIds;
-}
-
-//PokeSpot Light
-function displayPokemonCards(pokemonData) {
-  const pokemonBox = document.querySelector(".pokemonBox");
-  pokemonBox.innerHTML = "";
-  pokemonData.forEach((pokemon) => {
-    const card = document.createElement("div");
-    card.classList.add("card");
-
-    const image = document.createElement("img");
-    image.src = pokemon.sprites.front_default;
-    image.alt = capitalizeFirstLetter(pokemon.name);
-    card.appendChild(image);
-
-    pokemonBox.appendChild(card);
-  });
-}
-
-async function getRandomPokemons() {
-  try {
-    const randomPokemonIds = generateRandomIds(5);
-    const pokemonDataPromises = randomPokemonIds.map((id) =>
-      fetch(`https://pokeapi.co/api/v2/pokemon/${id}/`).then((response) =>
-        response.json()
-      )
-    );
-    const pokemonData = await Promise.all(pokemonDataPromises);
-    return pokemonData;
-  } catch (error) {
-    console.error("Error fetching Pokémon data:", error);
-  }
-}
-
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
@@ -108,15 +65,14 @@ fetch("https://pokeapi.co/api/v2/pokemon?limit=10000")
     console.log("Failed to fetch Pokémon list", err);
   });
 
-// Event listener for the search button
 const searchButton = document.getElementById("search");
 searchButton.addEventListener("click", getPokemon);
 
-// Helper function to get random Pokémon cards and display them
+//Featured Pokemon
 function displayRandomPokemonCards() {
   getRandomPokemons().then((pokemonData) => {
     const randomPokemonBox = document.querySelector(".randomPokemonBox");
-    randomPokemonBox.innerHTML = ""; // Clear existing cards
+    randomPokemonBox.innerHTML = "";
     pokemonData.forEach((pokemon) => {
       const card = document.createElement("div");
       card.classList.add("card");
@@ -124,6 +80,8 @@ function displayRandomPokemonCards() {
       const image = document.createElement("img");
       image.src = pokemon.sprites.other["official-artwork"].front_default;
       image.alt = capitalizeFirstLetter(pokemon.name);
+      image.style.width = "100%";
+      image.style.height = "100%";
       card.appendChild(image);
 
       const name = document.createElement("p");
@@ -135,9 +93,54 @@ function displayRandomPokemonCards() {
   });
 }
 
-// Event listener for the "Get Random Pokémon" button
+function generateRandomIds(count) {
+  const randomIds = [];
+  while (randomIds.length < count) {
+    const randomId = Math.floor(Math.random() * 1010) + 1;
+    if (!randomIds.includes(randomId)) {
+      randomIds.push(randomId);
+    }
+  }
+  return randomIds;
+}
+
+//Dispolay Pokemon Cards
+function displayPokemonCards(pokemonData) {
+  const pokemonBox = document.querySelector(".pokemonBox");
+  pokemonBox.innerHTML = "";
+  pokemonData.forEach((pokemon) => {
+    const card = document.createElement("div");
+    card.classList.add("card");
+
+    const image = document.createElement("img");
+    image.src = pokemon.sprites.other["official-artwork"].front_default;
+    image.alt = capitalizeFirstLetter(pokemon.name);
+    card.appendChild(image);
+
+    const name = document.createElement("p");
+    name.textContent = capitalizeFirstLetter(pokemon.name);
+    card.appendChild(name);
+
+    pokemonBox.appendChild(card);
+  });
+}
+
+async function getRandomPokemons() {
+  try {
+    const randomPokemonIds = generateRandomIds(5);
+    const pokemonDataPromises = randomPokemonIds.map((id) =>
+      fetch(`https://pokeapi.co/api/v2/pokemon/${id}/`).then((response) =>
+        response.json()
+      )
+    );
+    const pokemonData = await Promise.all(pokemonDataPromises);
+    return pokemonData;
+  } catch (error) {
+    console.error("Error fetching Pokémon data:", error);
+  }
+}
+
 const randomPokemonButton = document.getElementById("randomPokemonButton");
 randomPokemonButton.addEventListener("click", displayRandomPokemonCards);
 
-// Initial load: Display 5 random Pokémon cards
 displayRandomPokemonCards();
