@@ -70,3 +70,30 @@ fetch("https://pokeapi.co/api/v2/pokemon?limit=10000")
   });
 
 //e.preventDefault();
+
+//pokemon spotlight
+function generateRandomIds(count) {
+  const randomIds = [];
+  while (randomIds.length < count) {
+    const randomId = Math.floor(Math.random() * 1010) + 1;
+    if (!randomIds.includes(randomId)) {
+      randomIds.push(randomId);
+    }
+  }
+  return randomIds;
+}
+
+async function getRandomPokemon() {
+  try {
+    const randomPokemonIds = generateRandomIds(5);
+    const pokemonDataPromises = randomPokemonIds.map((id) =>
+      fetch(`https://pokeapi.co/api/v2/pokemon/${id}/`).then((response) =>
+        response.json()
+      )
+    );
+    const pokemonData = await Promise.all(pokemonDataPromises);
+    return pokemonData;
+  } catch (error) {
+    console.error("Error fetching Pokémon data:", error);
+  }
+}

@@ -6,3 +6,5 @@ const \__ = data._**_.map((_**) => **_._**.name).join(", ");
 - add previous and next pokemon to the bottom. (Id,spite,name)
 - add forms to mons
 - add move list to a table with damage and move typing
+
+pokemon.sprites.front_default (pc box sprites)
