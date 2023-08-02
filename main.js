@@ -1,4 +1,45 @@
-document.querySelector("#search").addEventListener("click", getPokemon);
+function generateRandomIds(count) {
+  const randomIds = [];
+  while (randomIds.length < count) {
+    const randomId = Math.floor(Math.random() * 1010) + 1;
+    if (!randomIds.includes(randomId)) {
+      randomIds.push(randomId);
+    }
+  }
+  return randomIds;
+}
+
+//PokeSpot Light
+function displayPokemonCards(pokemonData) {
+  const pokemonBox = document.querySelector(".pokemonBox");
+  pokemonBox.innerHTML = "";
+  pokemonData.forEach((pokemon) => {
+    const card = document.createElement("div");
+    card.classList.add("card");
+
+    const image = document.createElement("img");
+    image.src = pokemon.sprites.front_default;
+    image.alt = capitalizeFirstLetter(pokemon.name);
+    card.appendChild(image);
+
+    pokemonBox.appendChild(card);
+  });
+}
+
+async function getRandomPokemons() {
+  try {
+    const randomPokemonIds = generateRandomIds(5);
+    const pokemonDataPromises = randomPokemonIds.map((id) =>
+      fetch(`https://pokeapi.co/api/v2/pokemon/${id}/`).then((response) =>
+        response.json()
+      )
+    );
+    const pokemonData = await Promise.all(pokemonDataPromises);
+    return pokemonData;
+  } catch (error) {
+    console.error("Error fetching Pokémon data:", error);
+  }
+}
 
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
@@ -32,22 +73,20 @@ function getPokemon(e) {
         .join("<br>");
 
       document.querySelector(".pokemonBox").innerHTML = `
-          <div>
-            <img src="${
-              data.sprites.other["official-artwork"].front_default
-            }" alt="${capitalizeFirstLetter(data.name)}}" />
-          </div>
-          <div class="pokemonInfo">
-            <h1>${capitalizeFirstLetter(data.name)}</h1>
-            <p>National Pokédex Number: #${data.id}</p>
-            <p>Type: ${type}</p>
-            <p>Weight: ${data.weight * 0.1} kg / ${data.weight * 0.22} lbs </p>
-            <p>${stats}</p>
-            <p>Moves: ${moves}</p>
-
-
-          </div>
-        `;
+        <div>
+          <img src="${
+            data.sprites.other["official-artwork"].front_default
+          }" alt="${capitalizeFirstLetter(data.name)}" />
+        </div>
+        <div class="pokemonInfo">
+          <h1>${capitalizeFirstLetter(data.name)}</h1>
+          <p>National Pokédex Number: #${data.id}</p>
+          <p>Type: ${type}</p>
+          <p>Weight: ${data.weight * 0.1} kg / ${data.weight * 0.22} lbs </p>
+          <p>${stats}</p>
+          <p>Moves: ${moves}</p>
+        </div>
+      `;
     })
     .catch((err) => {
       console.log("Pokemon not found", err);
@@ -69,31 +108,36 @@ fetch("https://pokeapi.co/api/v2/pokemon?limit=10000")
     console.log("Failed to fetch Pokémon list", err);
   });
 
-//e.preventDefault();
+// Event listener for the search button
+const searchButton = document.getElementById("search");
+searchButton.addEventListener("click", getPokemon);
 
-//pokemon spotlight
-function generateRandomIds(count) {
-  const randomIds = [];
-  while (randomIds.length < count) {
-    const randomId = Math.floor(Math.random() * 1010) + 1;
-    if (!randomIds.includes(randomId)) {
-      randomIds.push(randomId);
-    }
-  }
-  return randomIds;
+// Helper function to get random Pokémon cards and display them
+function displayRandomPokemonCards() {
+  getRandomPokemons().then((pokemonData) => {
+    const randomPokemonBox = document.querySelector(".randomPokemonBox");
+    randomPokemonBox.innerHTML = ""; // Clear existing cards
+    pokemonData.forEach((pokemon) => {
+      const card = document.createElement("div");
+      card.classList.add("card");
+
+      const image = document.createElement("img");
+      image.src = pokemon.sprites.other["official-artwork"].front_default;
+      image.alt = capitalizeFirstLetter(pokemon.name);
+      card.appendChild(image);
+
+      const name = document.createElement("p");
+      name.textContent = capitalizeFirstLetter(pokemon.name);
+      card.appendChild(name);
+
+      randomPokemonBox.appendChild(card);
+    });
+  });
 }
 
-async function getRandomPokemon() {
-  try {
-    const randomPokemonIds = generateRandomIds(5);
-    const pokemonDataPromises = randomPokemonIds.map((id) =>
-      fetch(`https://pokeapi.co/api/v2/pokemon/${id}/`).then((response) =>
-        response.json()
-      )
-    );
-    const pokemonData = await Promise.all(pokemonDataPromises);
-    return pokemonData;
-  } catch (error) {
-    console.error("Error fetching Pokémon data:", error);
-  }
-}
+// Event listener for the "Get Random Pokémon" button
+const randomPokemonButton = document.getElementById("randomPokemonButton");
+randomPokemonButton.addEventListener("click", displayRandomPokemonCards);
+
+// Initial load: Display 5 random Pokémon cards
+displayRandomPokemonCards();
