@@ -29,6 +29,9 @@ function getPokemon(e) {
           return `<p>${statName}: ${baseStat}<p>`;
         })
         .join("<br>");
+      // weight
+      const weightKg = (data.weight * 0.1).toFixed(2);
+      const weightLbs = (data.weight * 0.22).toFixed(2);
 
       document.querySelector(".pokemonBox").innerHTML = `
         <div>
@@ -40,7 +43,7 @@ function getPokemon(e) {
           <h1>${capitalizeFirstLetter(data.name)}</h1>
           <p>National Pokédex Number: #${data.id}</p>
           <p>Type: ${type}</p>
-          <p>Weight: ${data.weight * 0.1} kg / ${data.weight * 0.22} lbs </p>
+          <p>Weight: ${weightKg} kg / ${weightLbs} lbs </p>
           <p>${stats}</p>
           <p>Moves: ${moves}</p>
         </div>
