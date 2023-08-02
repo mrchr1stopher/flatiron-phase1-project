@@ -55,11 +55,11 @@ function getPokemon(e) {
 
       //moves
       const movesBox = document.createElement("div");
-      movesBox.classList.add("movesBox");
+      movesBox.classList.add("pokemonInfo"); // Changed from "movesBox" to "pokemonInfo"
       data.moves.forEach((move) => {
         const moveName = capitalizeFirstLetter(move.move.name);
         const moveBox = document.createElement("div");
-        moveBox.classList.add("moveBox");
+        moveBox.classList.add("movesBox"); // Changed from "moveBox" to "movesBox"
         moveBox.textContent = moveName;
         movesBox.appendChild(moveBox);
       });
