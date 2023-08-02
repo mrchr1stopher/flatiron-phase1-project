@@ -6,6 +6,32 @@ function lowerCaseName(string) {
   return string.toLowerCase();
 }
 
+//Pokemon Search Box
+fetch("https://pokeapi.co/api/v2/pokemon?limit=10000")
+  .then((response) => response.json())
+  .then((data) => {
+    const pokemonList = document.querySelector("#pokemonList");
+    data.results.forEach((pokemon) => {
+      const option = document.createElement("option");
+      option.value = pokemon.name;
+      pokemonList.appendChild(option);
+    });
+  })
+  .catch((err) => {
+    console.log("Failed to fetch Pokémon list", err);
+  });
+
+const searchButton = document.getElementById("search");
+searchButton.addEventListener("click", getPokemon);
+
+const searchInput = document.getElementById("pokemonName");
+searchInput.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    getPokemon();
+  }
+});
+
 //Main Pokemon
 function getPokemon(e) {
   const name = document.querySelector("#pokemonName").value;
@@ -34,6 +60,7 @@ function getPokemon(e) {
       const weightKg = (data.weight * 0.1).toFixed(2);
       const weightLbs = (data.weight * 0.22).toFixed(2);
 
+      //dispayed infp
       document.querySelector(".pokemonBox").innerHTML = `
         <div>
           <img src="${
@@ -49,30 +76,12 @@ function getPokemon(e) {
           <p>Moves: ${moves}</p>
         </div>
       `;
+      document.querySelector("#pokemonName").value = "";
     })
     .catch((err) => {
       console.log("Pokemon not found", err);
     });
-  document.querySelector("#pokemonName").value = "";
 }
-
-//pokemon list
-fetch("https://pokeapi.co/api/v2/pokemon?limit=10000")
-  .then((response) => response.json())
-  .then((data) => {
-    const pokemonList = document.querySelector("#pokemonList");
-    data.results.forEach((pokemon) => {
-      const option = document.createElement("option");
-      option.value = pokemon.name;
-      pokemonList.appendChild(option);
-    });
-  })
-  .catch((err) => {
-    console.log("Failed to fetch Pokémon list", err);
-  });
-
-const searchButton = document.getElementById("search");
-searchButton.addEventListener("click", getPokemon);
 
 //Featured Pokemon
 function displayRandomPokemonCards() {
@@ -110,7 +119,7 @@ function generateRandomIds(count) {
   return randomIds;
 }
 
-//Dispolay Pokemon Cards
+//Display Pokemon Cards
 function displayPokemonCards(pokemonData) {
   const pokemonBox = document.querySelector(".pokemonBox");
   pokemonBox.innerHTML = "";
@@ -146,6 +155,7 @@ async function getRandomPokemons() {
   }
 }
 
+//Random Button
 const randomPokemonButton = document.getElementById("randomPokemonButton");
 randomPokemonButton.addEventListener("click", displayRandomPokemonCards);
 
