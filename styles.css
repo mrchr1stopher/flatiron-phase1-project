@@ -12,6 +12,11 @@ body {
   border-radius: 10px;
 }
 
+.pokemonBox img {
+  max-width: 90%;
+  max-height: 500px;
+}
+
 .randomPokemonBox {
   display: flex;
   flex-wrap: wrap;
@@ -25,9 +30,10 @@ body {
   margin: 10px;
 }
 .card img {
-  width: 5000px;
-  height: 5000px;
+  max-width: 100%;
+  max-height: 150px;
 }
+
 .card p {
   text-align: center;
   margin-top: 5px;

@@ -13,7 +13,7 @@ fetch("https://pokeapi.co/api/v2/pokemon?limit=10000")
     const pokemonList = document.querySelector("#pokemonList");
     data.results.forEach((pokemon) => {
       const option = document.createElement("option");
-      option.value = pokemon.name;
+      option.value = capitalizeFirstLetter(pokemon.name);
       pokemonList.appendChild(option);
     });
   })
@@ -36,46 +36,54 @@ searchInput.addEventListener("keydown", (event) => {
 function getPokemon(e) {
   const name = document.querySelector("#pokemonName").value;
   const pokemonName = lowerCaseName(name);
-  fetch(`https://pokeapi.co/api/v2/pokemon/${name}`)
+  fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
     .then((response) => response.json())
     .then((data) => {
       // typing
       const type = data.types
         .map((type) => capitalizeFirstLetter(type.type.name))
         .join(" / ");
-      //moves
-      const moves = data.moves
-        .map((move) => capitalizeFirstLetter(move.move.name))
-        .join(", ");
+
       //stats
       const stats = data.stats
         .map((stat) => {
           const statName = capitalizeFirstLetter(stat.stat.name);
           const baseStat = stat.base_stat;
-          return `<p>${statName}: ${baseStat}<p>`;
+          return `${statName}: ${baseStat}`;
         })
         .join("<br>");
+
+      //moves
+      const movesBox = document.createElement("div");
+      movesBox.classList.add("movesBox");
+      data.moves.forEach((move) => {
+        const moveName = capitalizeFirstLetter(move.move.name);
+        const moveBox = document.createElement("div");
+        moveBox.classList.add("moveBox");
+        moveBox.textContent = moveName;
+        movesBox.appendChild(moveBox);
+      });
 
       // weight
       const weightKg = (data.weight * 0.1).toFixed(2);
       const weightLbs = (data.weight * 0.22).toFixed(2);
 
-      //dispayed infp
+      //dispayed info
       document.querySelector(".pokemonBox").innerHTML = `
-        <div>
-          <img src="${
-            data.sprites.other["official-artwork"].front_default
-          }" alt="${capitalizeFirstLetter(data.name)}" />
-        </div>
-        <div class="pokemonInfo">
-          <h1>${capitalizeFirstLetter(data.name)}</h1>
-          <p>National Pokédex Number: #${data.id}</p>
-          <p>Type: ${type}</p>
-          <p>Weight: ${weightKg} kg / ${weightLbs} lbs </p>
-          <p>${stats}</p>
-          <p>Moves: ${moves}</p>
-        </div>
-      `;
+     <div>
+       <img src="${
+         data.sprites.other["official-artwork"].front_default
+       }" alt="${capitalizeFirstLetter(data.name)}" />
+     </div>
+     <div class="pokemonInfo">
+       <h1>${capitalizeFirstLetter(data.name)}</h1>
+       <p>National Pokédex Number: #${data.id}</p>
+       <p>Type: ${type}</p>
+       <p>Weight: ${weightKg} kg / ${weightLbs} lbs<p>
+       <p>${stats}<p>
+       <p>Moves: ${movesBox.innerHTML}</p>
+     </div>
+   `;
       document.querySelector("#pokemonName").value = "";
     })
     .catch((err) => {
@@ -108,6 +116,7 @@ function displayRandomPokemonCards() {
   });
 }
 
+// Random Counter
 function generateRandomIds(count) {
   const randomIds = [];
   while (randomIds.length < count) {
@@ -119,7 +128,7 @@ function generateRandomIds(count) {
   return randomIds;
 }
 
-//Display Pokemon Cards
+//Display Random Pokemon Cards
 function displayPokemonCards(pokemonData) {
   const pokemonBox = document.querySelector(".pokemonBox");
   pokemonBox.innerHTML = "";
@@ -140,6 +149,7 @@ function displayPokemonCards(pokemonData) {
   });
 }
 
+//Random Card Loader
 async function getRandomPokemons() {
   try {
     const randomPokemonIds = generateRandomIds(5);
