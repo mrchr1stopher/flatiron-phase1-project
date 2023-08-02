@@ -55,11 +55,11 @@ function getPokemon(e) {
 
       //moves
       const movesBox = document.createElement("div");
-      movesBox.classList.add("pokemonInfo"); // Changed from "movesBox" to "pokemonInfo"
+      movesBox.classList.add("pokemonInfo");
       data.moves.forEach((move) => {
         const moveName = capitalizeFirstLetter(move.move.name);
         const moveBox = document.createElement("div");
-        moveBox.classList.add("movesBox"); // Changed from "moveBox" to "movesBox"
+        moveBox.classList.add("movesBox");
         moveBox.textContent = moveName;
         movesBox.appendChild(moveBox);
       });
@@ -108,7 +108,9 @@ function displayRandomPokemonCards() {
       card.appendChild(image);
 
       const name = document.createElement("p");
-      name.textContent = capitalizeFirstLetter(pokemon.name);
+      name.textContent = `#${pokemon.id} ${capitalizeFirstLetter(
+        pokemon.name
+      )}`;
       card.appendChild(name);
 
       randomPokemonBox.appendChild(card);
