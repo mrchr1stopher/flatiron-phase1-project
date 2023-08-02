@@ -29,6 +29,7 @@ function getPokemon(e) {
           return `<p>${statName}: ${baseStat}<p>`;
         })
         .join("<br>");
+
       // weight
       const weightKg = (data.weight * 0.1).toFixed(2);
       const weightLbs = (data.weight * 0.22).toFixed(2);
@@ -52,6 +53,7 @@ function getPokemon(e) {
     .catch((err) => {
       console.log("Pokemon not found", err);
     });
+  document.querySelector("#pokemonName").value = "";
 }
 
 //pokemon list
