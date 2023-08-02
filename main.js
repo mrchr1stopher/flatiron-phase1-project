@@ -6,6 +6,7 @@ function lowerCaseName(string) {
   return string.toLowerCase();
 }
 
+//Main Pokemon
 function getPokemon(e) {
   const name = document.querySelector("#pokemonName").value;
   const pokemonName = lowerCaseName(name);
@@ -25,7 +26,7 @@ function getPokemon(e) {
         .map((stat) => {
           const statName = capitalizeFirstLetter(stat.stat.name);
           const baseStat = stat.base_stat;
-          return `${statName}: ${baseStat}`;
+          return `<p>${statName}: ${baseStat}<p>`;
         })
         .join("<br>");
 

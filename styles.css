@@ -1,6 +1,17 @@
 body {
   background-color: white;
 }
+
+.pokemonBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+}
+
 .randomPokemonBox {
   display: flex;
   flex-wrap: wrap;
