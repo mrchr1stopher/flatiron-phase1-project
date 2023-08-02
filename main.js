@@ -14,13 +14,15 @@ function getPokemon(e) {
   fetch(`https://pokeapi.co/api/v2/pokemon/${name}`)
     .then((response) => response.json())
     .then((data) => {
+      // typing
       const type = data.types
         .map((type) => capitalizeFirstLetter(type.type.name))
         .join(" / ");
+      //moves
       const moves = data.moves
         .map((move) => capitalizeFirstLetter(move.move.name))
         .join(", ");
-
+      //stats
       const stats = data.stats
         .map((stat) => {
           const statName = capitalizeFirstLetter(stat.stat.name);
@@ -52,4 +54,19 @@ function getPokemon(e) {
     });
 }
 
-e.preventDefault();
+//pokemon list
+fetch("https://pokeapi.co/api/v2/pokemon?limit=10000")
+  .then((response) => response.json())
+  .then((data) => {
+    const pokemonList = document.querySelector("#pokemonList");
+    data.results.forEach((pokemon) => {
+      const option = document.createElement("option");
+      option.value = pokemon.name;
+      pokemonList.appendChild(option);
+    });
+  })
+  .catch((err) => {
+    console.log("Failed to fetch Pokémon list", err);
+  });
+
+//e.preventDefault();

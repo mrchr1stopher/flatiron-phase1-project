@@ -19,15 +19,28 @@
       <h3>PokèDex Lite</h3>
     </header>
     <main>
-      <div class="searhbox">
-        <input id="pokemonName" type="text" placeholder="Pokemon Name" />
+      <div class="searchbox">
+        <input
+          id="pokemonName"
+          type="text"
+          placeholder="Pokemon Name"
+          list="pokemonList"
+        />
+        <datalist id="pokemonList"></datalist>
         <button id="search">🔍</button>
       </div>
       <div class="pokemonBox"></div>
+      <div class="randomPokemonSection">
+        <h2>PokéSpot Light</h2>
+        <div class="randomPokemonBox"></div>
+        <button id="randomPokemonButton">Other Pokémon</button>
+      </div>
     </main>
     <footer>
-      <p>PokèDex Lite by Christopher D. Wiggins</p>
-      <a href="#top">Back to top</a>
+      <p>
+        PokèDex Lite by Christopher D. Wiggins
+        <a href="#top">Back to top</a>
+      </p>
     </footer>
   </body>
 </html>
