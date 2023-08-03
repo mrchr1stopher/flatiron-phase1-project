@@ -77,26 +77,43 @@ function getPokemon(e) {
       const weightKg = (data.weight * 0.1).toFixed(2);
       const weightLbs = (data.weight * 0.22).toFixed(2);
 
-      //Dispayed Info
-      document.querySelector(".pokemonBox").innerHTML = `
-        <div><h1>${capitalizeFirstLetter(data.name)}</h1></div>
-        <div class="pokemonImageBox">
-          <img src="${
-            data.sprites.other["official-artwork"].front_default
-          }" alt="${capitalizeFirstLetter(data.name)}" />
-        </div>
-        <p>National Pokédex Number: ${nationalDexText}</p>
-        <p>Height: ${heightMeters} M / ${heightFeet} Ft</p>
-        <p>Weight: ${weightKg} Kg / ${weightLbs} Lbs</p>
-        <div class="pokemonType">
-          <p>Type: ${type}</p>
-        </div>
-        <div class="pokemonInfo">
-          <p>${stats}</p>
-       <p>Moves: ${movesBox.innerHTML}</p>
-     </div>
-   `;
-      document.querySelector("#pokemonName").value = "";
+      //Species Info
+      fetch(data.species.url)
+        .then((response) => response.json())
+        .then((speciesData) => {
+          const speciesName = capitalizeFirstLetter(
+            speciesData.genera.find((genus) => genus.language.name === "en")
+              .genus
+          );
+
+          // Dispayed Info
+          document.querySelector(".pokemonBox").innerHTML = `
+            <div>
+              <h1>${capitalizeFirstLetter(data.name)}</h1>
+              <div class="speciesBox">
+                <p>${speciesName}</p>
+              </div>
+              <div class="pokemonImageBox">
+                <img src="${
+                  data.sprites.other["official-artwork"].front_default
+                }" alt="${capitalizeFirstLetter(data.name)}" />
+              </div>
+            </div>
+            <p>National Pokédex Number: ${nationalDexText}</p>
+            <p>Height: ${heightMeters} M / ${heightFeet} Ft</p>
+            <p>Weight: ${weightKg} Kg / ${weightLbs} Lbs</p>
+            <div class="pokemonType">
+              <p>Type: ${type}</p>
+            </div>
+            <div class="pokemonInfo">
+              <p>${stats}</p>
+              <p>Moves: ${movesBox.innerHTML}</p>
+            </div>
+          `;
+        })
+        .catch((err) => {
+          console.log("Error fetching species data", err);
+        });
     })
     .catch((err) => {
       console.log("Pokemon not found", err);

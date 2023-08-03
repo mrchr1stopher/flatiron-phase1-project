@@ -5,8 +5,8 @@ body {
 h3 {
   font-size: 20px;
   color: yellow;
-  text-shadow: -1px -1px 0 #007bff, 1px -1px 0 #007bff, -1px 1px 0 #007bff,
-    2px 2px 0 #007bff;
+  text-shadow: -1px -1px 0 #10467f, 1px -1px 0 #10467f, -1px 1px 0 #10467f,
+    2px 2px 0 #10467f;
 }
 
 .searchbox {
