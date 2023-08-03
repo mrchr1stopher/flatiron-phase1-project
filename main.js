@@ -100,6 +100,12 @@ function displayRandomPokemonCards() {
       const card = document.createElement("div");
       card.classList.add("card");
 
+      const name = document.createElement("p");
+      name.textContent = `#${pokemon.id} ${capitalizeFirstLetter(
+        pokemon.name
+      )}`;
+      card.appendChild(name);
+
       const image = document.createElement("img");
       image.src = pokemon.sprites.other["official-artwork"].front_default;
       image.alt = capitalizeFirstLetter(pokemon.name);
@@ -107,11 +113,11 @@ function displayRandomPokemonCards() {
       image.style.height = "100%";
       card.appendChild(image);
 
-      const name = document.createElement("p");
-      name.textContent = `#${pokemon.id} ${capitalizeFirstLetter(
-        pokemon.name
-      )}`;
-      card.appendChild(name);
+      const type = document.createElement("p");
+      type.textContent = `Type: ${pokemon.types
+        .map((t) => capitalizeFirstLetter(t.type.name))
+        .join(" / ")}`;
+      card.appendChild(type);
 
       randomPokemonBox.appendChild(card);
     });
