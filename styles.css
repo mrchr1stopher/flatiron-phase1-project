@@ -18,14 +18,20 @@ h3 {
 .pokemonBox h1 {
   display: flex;
   font-family: Georgia, serif;
-  align-items: center;
-  justify-content: center;
+  align-items: right;
+  justify-content: right;
+  margin: 25px;
 }
 
 .pokemonImageBox {
-  border: 8px solid black;
+  border: 6px solid black;
   padding: 10px;
-  display: inline-block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2px;
+  width: 200px;
+  height: 200px;
 }
 
 .pokemonBox img {
@@ -37,7 +43,7 @@ h3 {
 .movesBox {
   width: 100px;
   height: 20px;
-  background-color: #d2bf18;
+  background-color: #f0f0f0;
   border-radius: 8px;
   display: flex;
   align-items: center;
