@@ -39,12 +39,17 @@ function getPokemon(e) {
   fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
     .then((response) => response.json())
     .then((data) => {
-      // typing
+      //Dex Number
+      const nationalDexNumber = data.id;
+      const nationalDexText =
+        nationalDexNumber <= 1010 ? `#${nationalDexNumber}` : "???";
+
+      //Typing
       const type = data.types
         .map((type) => capitalizeFirstLetter(type.type.name))
         .join(" / ");
 
-      //stats
+      //Stats
       const stats = data.stats
         .map((stat) => {
           const statName = capitalizeFirstLetter(stat.stat.name);
@@ -53,7 +58,7 @@ function getPokemon(e) {
         })
         .join("<br>");
 
-      //moves
+      //Moves
       const movesBox = document.createElement("div");
       movesBox.classList.add("pokemonInfo");
       data.moves.forEach((move) => {
@@ -64,20 +69,19 @@ function getPokemon(e) {
         movesBox.appendChild(moveBox);
       });
 
-      // weight
+      //Weight
       const weightKg = (data.weight * 0.1).toFixed(2);
       const weightLbs = (data.weight * 0.22).toFixed(2);
 
-      //dispayed info
+      //Dispayed Info
       document.querySelector(".pokemonBox").innerHTML = `
-     <div>
+     <div><h1>${capitalizeFirstLetter(data.name)}</h1>
        <img src="${
          data.sprites.other["official-artwork"].front_default
        }" alt="${capitalizeFirstLetter(data.name)}" />
      </div>
      <div class="pokemonInfo">
-       <h1>${capitalizeFirstLetter(data.name)}</h1>
-       <p>National Pokédex Number: #${data.id}</p>
+       <p>National Pokédex Number: ${nationalDexText}</p>
        <p>Type: ${type}</p>
        <p>Weight: ${weightKg} kg / ${weightLbs} lbs<p>
        <p>${stats}<p>
