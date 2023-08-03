@@ -69,25 +69,30 @@ function getPokemon(e) {
         movesBox.appendChild(moveBox);
       });
 
+      // Height
+      const heightMeters = (data.height * 0.1).toFixed(2);
+      const heightFeet = (data.height * 0.328084).toFixed(2);
+
       //Weight
       const weightKg = (data.weight * 0.1).toFixed(2);
       const weightLbs = (data.weight * 0.22).toFixed(2);
 
       //Dispayed Info
       document.querySelector(".pokemonBox").innerHTML = `
-     <div><h1>${capitalizeFirstLetter(data.name)}</h1>
-     <div class="pokemonImageBox">
-       <img src="${
-         data.sprites.other["official-artwork"].front_default
-       }" alt="${capitalizeFirstLetter(data.name)}" />
-     </div>
-     <div class="pokemonType">
-     <p>Type: ${type}</p>
-     </div>
-     <div class="pokemonInfo">
-       <p>National Pokédex Number: ${nationalDexText}</p>
-       <p>Weight: ${weightKg} kg / ${weightLbs} lbs<p>
-       <p>${stats}<p>
+        <div><h1>${capitalizeFirstLetter(data.name)}</h1></div>
+        <div class="pokemonImageBox">
+          <img src="${
+            data.sprites.other["official-artwork"].front_default
+          }" alt="${capitalizeFirstLetter(data.name)}" />
+        </div>
+        <p>National Pokédex Number: ${nationalDexText}</p>
+        <p>Height: ${heightMeters} M / ${heightFeet} Ft</p>
+        <p>Weight: ${weightKg} Kg / ${weightLbs} Lbs</p>
+        <div class="pokemonType">
+          <p>Type: ${type}</p>
+        </div>
+        <div class="pokemonInfo">
+          <p>${stats}</p>
        <p>Moves: ${movesBox.innerHTML}</p>
      </div>
    `;
