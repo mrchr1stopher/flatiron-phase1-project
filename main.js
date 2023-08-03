@@ -76,13 +76,16 @@ function getPokemon(e) {
       //Dispayed Info
       document.querySelector(".pokemonBox").innerHTML = `
      <div><h1>${capitalizeFirstLetter(data.name)}</h1>
+     <div class="pokemonImageBox">
        <img src="${
          data.sprites.other["official-artwork"].front_default
        }" alt="${capitalizeFirstLetter(data.name)}" />
      </div>
+     <div class="pokemonType">
+     <p>Type: ${type}</p>
+     </div>
      <div class="pokemonInfo">
        <p>National Pokédex Number: ${nationalDexText}</p>
-       <p>Type: ${type}</p>
        <p>Weight: ${weightKg} kg / ${weightLbs} lbs<p>
        <p>${stats}<p>
        <p>Moves: ${movesBox.innerHTML}</p>
