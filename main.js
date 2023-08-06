@@ -85,6 +85,40 @@ function getPokemon(e) {
             speciesData.genera.find((genus) => genus.language.name === "en")
               .genus
           );
+          // Pokédex Entry
+          const scarletVersion = speciesData.flavor_text_entries.find(
+            (entry) =>
+              entry.language.name === "en" && entry.version.name === "scarlet"
+          );
+          const legendsVersion = speciesData.flavor_text_entries.find(
+            (entry) =>
+              entry.language.name === "en" && entry.version.name === "legends"
+          );
+          const swordVersion = speciesData.flavor_text_entries.find(
+            (entry) =>
+              entry.language.name === "en" && entry.version.name === "sword"
+          );
+          const ultraSunVersion = speciesData.flavor_text_entries.find(
+            (entry) =>
+              entry.language.name === "en" && entry.version.name === "ultra-sun"
+          );
+          const omegaRubyVersion = speciesData.flavor_text_entries.find(
+            (entry) =>
+              entry.language.name === "en" &&
+              entry.version.name === "omega-ruby"
+          );
+
+          const pokedexEntry = scarletVersion
+            ? scarletVersion.flavor_text
+            : legendsVersion
+            ? legendsVersion.flavor_text
+            : swordVersion
+            ? swordVersion.flavor_text
+            : ultraSunVersion
+            ? ultraSunVersion.flavor_text
+            : omegaRubyVersion
+            ? omegaRubyVersion.flavor_text
+            : "Pokédex entry not available.";
 
           // Dispayed Info
           document.querySelector(".pokemonBox").innerHTML = `
@@ -92,6 +126,9 @@ function getPokemon(e) {
               <h1>${capitalizeFirstLetter(data.name)}</h1>
               <div class="speciesBox">
                 <p>${speciesName}</p>
+              </div>
+              <div class pokedexEntry>
+              <p>Pokédex Entry: ${pokedexEntry}</p>
               </div>
               <div class="pokemonImageBox">
                 <img src="${
@@ -110,6 +147,7 @@ function getPokemon(e) {
               <p>Moves: ${movesBox.innerHTML}</p>
             </div>
           `;
+          document.querySelector("#pokemonName").value = "";
         })
         .catch((err) => {
           console.log("Error fetching species data", err);

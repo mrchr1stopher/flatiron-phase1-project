@@ -17,14 +17,15 @@ h3 {
 .pokemonBox h1 {
   display: flex;
   font-family: Georgia, serif;
-  align-items: right;
-  justify-content: right;
+  align-items: center;
+  justify-content: center;
   margin: 25px;
 }
 .speciesBox {
   font-size: 16px;
   margin: 25px;
-  text-align: right;
+  font-family: Georgia, serif;
+  text-align: center;
 }
 .pokemonImageBox {
   border: 6px solid black;
