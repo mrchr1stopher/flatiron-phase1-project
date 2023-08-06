@@ -129,11 +129,15 @@ function getPokemon(e) {
               </div>
               <div class = "pokedexEntryBox">
               <p>Pokédex Entry: ${pokedexEntry}</p>
-              </div>
               <div class="pokemonImageBox">
                 <img src="${
                   data.sprites.other["official-artwork"].front_default
                 }" alt="${capitalizeFirstLetter(data.name)}" />
+              </div>
+              </div>
+              
+              <div class="pokemonStatInfoBox">
+              <p>${stats}</p>
               </div>
             </div>
             <p>National Pokédex Number: ${nationalDexText}</p>
@@ -142,9 +146,9 @@ function getPokemon(e) {
             <div class="pokemonType">
               <p>Type: ${type}</p>
             </div>
-            <div class="pokemonInfo">
-              <p>${stats}</p>
-              <p>Moves: ${movesBox.innerHTML}</p>
+           
+              <div class="pokemonMoves">
+              <p> ${movesBox.innerHTML}</p>
             </div>
           `;
           document.querySelector("#pokemonName").value = "";
