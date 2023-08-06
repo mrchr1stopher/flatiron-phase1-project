@@ -1,5 +1,6 @@
 body {
-  background-color: white;
+  background-color: rgb(164, 35, 35);
+  color: #f0f0f0;
 }
 
 h3 {
@@ -35,7 +36,9 @@ h3 {
 }
 
 .pokemonImageBox {
-  border: 6px solid black;
+  border: 10px solid rgb(255, 255, 255);
+  background-color: rgb(197, 224, 255);
+  box-shadow: 8px 8px 5px #5e5e5e;
   padding: 10px;
   display: inline-flex;
   justify-content: center;
@@ -52,25 +55,32 @@ h3 {
 }
 
 .pokemonStatInfoBox {
-  font-size: 16px;
-  margin: 25px;
+  font-size: 25px;
   display: flex;
   font-family: Georgia, serif;
   text-align: center;
-  justify-content: top;
-  align-items: right;
+  justify-content: center;
+  align-items: center;
+}
+
+.pokemonMoves {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  color: black;
 }
 
 .movesBox {
   width: 100px;
   height: 20px;
   background-color: #f0f0f0;
-  border-radius: 8px;
+  border-radius: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 10px;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .randomPokemonBox {
