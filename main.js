@@ -127,7 +127,7 @@ function getPokemon(e) {
               <div class="speciesBox">
                 <p>${speciesName}</p>
               </div>
-              <div class pokedexEntry>
+              <div class = "pokedexEntryBox">
               <p>Pokédex Entry: ${pokedexEntry}</p>
               </div>
               <div class="pokemonImageBox">
