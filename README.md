@@ -21,5 +21,9 @@ Open the PokéDex Lite in your web browser.
 Use the search box to search for a specific Pokémon by name. You can either press Enter or click the "Search"(magnifiying glass) button to bring up the Pokémon.
 View the details and information of the selected Pokémon.
 
+Contributing
+This project is open to contributions. If you find any issues or have suggestions for improvements, feel free to create a pull request or submit an issue on the GitHub repository
+https://github.com/mrchr1stopher/flatiron-phase1-project
+
 Acknowledgments
 PokeDeX Lite uses data from the PokeAPI (https://pokeapi.co/api/v2/), which provides comprehensive Pokémon data.
