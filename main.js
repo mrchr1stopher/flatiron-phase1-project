@@ -27,7 +27,6 @@ searchButton.addEventListener("click", getPokemon);
 const searchInput = document.getElementById("pokemonName");
 searchInput.addEventListener("keydown", (event) => {
   if (event.key === "Enter") {
-    event.preventDefault();
     getPokemon();
   }
 });
@@ -85,6 +84,7 @@ function getPokemon(e) {
             speciesData.genera.find((genus) => genus.language.name === "en")
               .genus
           );
+
           // Pokédex Entry
           const scarletVersion = speciesData.flavor_text_entries.find(
             (entry) =>
@@ -141,14 +141,13 @@ function getPokemon(e) {
                 }" alt="${capitalizeFirstLetter(data.name)}" />
               </div>
               <p>Height: ${heightMeters} M / ${heightFeet} Ft </p>
+              <div class = pokemonWeight></div>
               <p>Weight: ${weightKg} Kg / ${weightLbs} Lbs</p>
               </div>
-              
-              
-              
               </div>
               <div class="pokemonStatInfoBox">
               <p>${stats}</p>
+
               </div>
             </div>
               <div class="pokemonMoves">
@@ -174,26 +173,22 @@ function displayRandomPokemonCards() {
     pokemonData.forEach((pokemon) => {
       const card = document.createElement("div");
       card.classList.add("card");
-
       const name = document.createElement("p");
       name.textContent = `#${pokemon.id} ${capitalizeFirstLetter(
         pokemon.name
       )}`;
       card.appendChild(name);
-
       const image = document.createElement("img");
       image.src = pokemon.sprites.other["official-artwork"].front_default;
       image.alt = capitalizeFirstLetter(pokemon.name);
       image.style.width = "100%";
       image.style.height = "100%";
       card.appendChild(image);
-
       const type = document.createElement("p");
       type.textContent = `Type: ${pokemon.types
         .map((t) => capitalizeFirstLetter(t.type.name))
         .join(" / ")}`;
       card.appendChild(type);
-
       randomPokemonBox.appendChild(card);
     });
   });
@@ -218,7 +213,6 @@ function displayPokemonCards(pokemonData) {
   pokemonData.forEach((pokemon) => {
     const card = document.createElement("div");
     card.classList.add("card");
-
     const image = document.createElement("img");
     image.src = pokemon.sprites.other["official-artwork"].front_default;
     image.alt = capitalizeFirstLetter(pokemon.name);
